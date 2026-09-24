@@ -41,7 +41,7 @@ namespace PDVStore.Forms
             txtBusca.TextChanged += TxtBusca_TextChanged;
         }
 
-        // Configura as colunas do DataGridView de usuários, incluindo a coluna de foto.
+        // Configura as colunas do DataGridView de usuários, incluindo a coluna de foto. 
         // O QUE FAZ: desliga a geração automática de colunas, define altura da linha e
         // cria colunas para Id, Nome, Permissão, Status e Foto (com imagem default).
         // POR QUE EXISTE: a grade é apenas leitura e reflete o modelo Usuario; a coluna
