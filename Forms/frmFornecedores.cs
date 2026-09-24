@@ -49,6 +49,9 @@ namespace PDVStore.Forms
             Text = "Fornecedores";
             StartPosition = FormStartPosition.CenterScreen;
             ClientSize = new Size(900, 560);
+            MaximumSize = new Size(900, 560);
+            MinimumSize = new Size(900, 560);
+            MaximizeBox = false;
             Font = new Font("Segoe UI", 10F);
             BackColor = Color.White;
 
@@ -258,6 +261,20 @@ namespace PDVStore.Forms
             MessageBox.Show("Fornecedor desativado.", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             await CarregarAsync();
             LimparCampos();
+        }
+
+        private void InitializeComponent()
+        {
+            SuspendLayout();
+            // 
+            // frmFornecedores
+            // 
+            ClientSize = new Size(284, 261);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            Name = "frmFornecedores";
+            ResumeLayout(false);
+
         }
 
         // O que faz: limpa os campos e zera _fornecedorSelecionado (modo novo).
