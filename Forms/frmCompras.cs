@@ -94,8 +94,14 @@ namespace PDVStore.Forms
             foreach (DataGridViewColumn c in dgvItens.Columns) c.FillWeight = Math.Max(50, c.Width);
             dgvItens.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-            var lblTotalLabel = new Label { Text = "Total:", Location = new Point(790, 148), AutoSize = true, Font = new Font("Segoe UI", 11F, FontStyle.Bold) };
-            lblTotal = new Label { Text = "R$ 0,00", Location = new Point(850, 145), AutoSize = true, Font = new Font("Segoe UI", 13F, FontStyle.Bold), ForeColor = Color.DarkGreen };
+            var lblTotalLabel = new Label { Text = "Total:", Location = new Point(790, 130), AutoSize = true, Font = new Font("Segoe UI", 11F, FontStyle.Bold) };
+            lblTotal = new Label { Text = "R$ 0,00", Location = new Point(880, 127), AutoSize = true, Font = new Font("Segoe UI", 13F, FontStyle.Bold), ForeColor = Color.DarkGreen };
+            // Adicione esta linha onde você configura as propriedades do seu Form
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+
+            // Opcional: Desabilita também o botão de Maximizar (quadrado ao lado do X)
+            this.MaximizeBox = false;
+
 
             btnSalvar = new Button { Text = "Salvar compra", Location = new Point(820, 166), Size = new Size(160, 36), BackColor = Color.ForestGreen, ForeColor = Color.White, Font = new Font("Segoe UI", 10F, FontStyle.Bold), FlatStyle = FlatStyle.Flat };
 
