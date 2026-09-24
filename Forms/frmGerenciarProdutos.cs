@@ -51,9 +51,12 @@ namespace PDVStore.Forms
         {
             Text = "Gerenciar Produtos";
             StartPosition = FormStartPosition.CenterScreen;
-            ClientSize = new Size(1180, 560);
+            ClientSize = new Size(1200, 560);
+            MaximumSize = new Size(1200, 560);
+            MinimumSize = new Size(1200, 560);
             Font = new Font("Segoe UI", 10F);
             BackColor = Color.White;
+
 
             dgvProdutos = new DataGridView { Location = new Point(500, 20), Size = new Size(660, 460), Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right, ReadOnly = true, AllowUserToAddRows = false, AutoGenerateColumns = false };
             btnRefresh = new Button { Text = "Refresh", Location = new Point(1045, 492), Size = new Size(75, 28) };
