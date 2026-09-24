@@ -57,6 +57,7 @@ namespace PDVStore.Forms
             Font = new Font("Segoe UI", 10F);
             BackColor = Color.White;
 
+
             dgvProdutos = new DataGridView { Location = new Point(500, 20), Size = new Size(660, 460), Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right, ReadOnly = true, AllowUserToAddRows = false, AutoGenerateColumns = false };
             btnRefresh = new Button { Text = "Refresh", Location = new Point(1045, 492), Size = new Size(75, 28) };
 
