@@ -52,6 +52,8 @@ namespace PDVStore.Forms
             Text = "Gerenciar Produtos";
             StartPosition = FormStartPosition.CenterScreen;
             ClientSize = new Size(1200, 560);
+            MaximumSize = new Size(1200, 560);
+            MinimumSize = new Size(1200, 560);
             Font = new Font("Segoe UI", 10F);
             BackColor = Color.White;
 
