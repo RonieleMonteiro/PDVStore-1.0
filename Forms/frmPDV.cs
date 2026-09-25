@@ -109,6 +109,8 @@ namespace PDVStore.Forms
             WindowState = FormWindowState.Maximized;
             Font = new Font("Segoe UI", 10F);
             BackColor = Color.White;
+            MaximizeBox = false;
+            MinimizeBox = false;
 
             lblUsuarioLogado = new Label { Text = "Operador: -", AutoSize = true, Font = new Font("Segoe UI", 11F, FontStyle.Bold), Location = new Point(20, 10) };
             Controls.Add(lblUsuarioLogado);
