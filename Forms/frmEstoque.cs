@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using PDVStore.Helpers;
 
 namespace PDVStore.Forms
 {
@@ -22,6 +23,7 @@ namespace PDVStore.Forms
         {
             _estoqueService = estoqueService ?? throw new ArgumentNullException(nameof(estoqueService));
             InitializeComponent();
+            Tema.Aplicar(this);
             ConfigurarFormulario();
         }
 

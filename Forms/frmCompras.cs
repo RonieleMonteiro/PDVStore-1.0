@@ -1,10 +1,11 @@
-using PDVStore.Models;
+﻿using PDVStore.Models;
 using PDVStore.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using PDVStore.Helpers;
 
 namespace PDVStore.Forms
 {
@@ -42,6 +43,7 @@ namespace PDVStore.Forms
             _fornecedorService = fornecedorService ?? throw new ArgumentNullException(nameof(fornecedorService));
             _estoqueService = estoqueService ?? throw new ArgumentNullException(nameof(estoqueService));
             BuildUI();
+            Tema.Aplicar(this);
             Load += async (_, _) => await CarregarAsync();
         }
 

@@ -1,9 +1,10 @@
-using PDVStore.Models;
+﻿using PDVStore.Models;
 using PDVStore.Services;
 using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using PDVStore.Helpers;
 
 namespace PDVStore.Forms
 {
@@ -37,6 +38,7 @@ namespace PDVStore.Forms
         {
             _estoqueService = estoqueService ?? throw new ArgumentNullException(nameof(estoqueService));
             InitializeComponent();
+            Tema.Aplicar(this);
             ConfigurarGrid();
             Load += async (_, _) => await CarregarProdutosAsync();
         }
@@ -52,6 +54,8 @@ namespace PDVStore.Forms
             Text = "Gerenciar Produtos";
             StartPosition = FormStartPosition.CenterScreen;
             ClientSize = new Size(1200, 560);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             MaximumSize = new Size(1200, 560);
             MinimumSize = new Size(1200, 560);
             Font = new Font("Segoe UI", 10F);
