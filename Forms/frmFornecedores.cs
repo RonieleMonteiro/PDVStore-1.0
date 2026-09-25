@@ -48,9 +48,9 @@ namespace PDVStore.Forms
         {
             Text = "Fornecedores";
             StartPosition = FormStartPosition.CenterScreen;
-            ClientSize = new Size(900, 560);
-            MaximumSize = new Size(900, 560);
-            MinimumSize = new Size(900, 560);
+            ClientSize = new Size(920, 560);
+            MaximumSize = new Size(920, 560);
+            MinimumSize = new Size(920, 560);
             MaximizeBox = false;
             Font = new Font("Segoe UI", 10F);
             BackColor = Color.White;
