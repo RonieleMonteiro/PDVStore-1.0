@@ -1,4 +1,4 @@
-using PDVStore.Helpers;
+﻿using PDVStore.Helpers;
 using PDVStore.Services;
 using PDVStore.ViewModels;
 using System;
@@ -35,6 +35,7 @@ namespace PDVStore.Forms
             _viewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
             _relatorioService = relatorioService ?? throw new ArgumentNullException(nameof(relatorioService));
             BuildUI();
+            Tema.Aplicar(this);
             Load += async (_, _) => await CarregarAsync();
         }
 
