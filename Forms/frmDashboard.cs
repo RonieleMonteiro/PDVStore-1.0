@@ -48,6 +48,8 @@ namespace PDVStore.Forms
             Text = "Dashboard & Relatórios";
             StartPosition = FormStartPosition.CenterScreen;
             Size = new Size(1350, 900);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Font = new Font("Segoe UI", 10F);
             BackColor = Color.White;
 
