@@ -1,4 +1,4 @@
-﻿using PDVStore.Helpers;
+using PDVStore.Helpers;
 using PDVStore.Models;
 using PDVStore.Services;
 using System;
@@ -40,7 +40,6 @@ namespace PDVStore.Forms
         {
             _clienteService = clienteService ?? throw new ArgumentNullException(nameof(clienteService));
             BuildUI();
-            Tema.Aplicar(this);
             Load += async (_, _) => await CarregarAsync();
         }
 
@@ -54,8 +53,6 @@ namespace PDVStore.Forms
             Text = "Clientes (Fiado / Caderneta)";
             StartPosition = FormStartPosition.CenterScreen;
             ClientSize = new Size(1200, 600);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            MaximizeBox = false;
             Font = new Font("Segoe UI", 10F);
             BackColor = Color.White;
 

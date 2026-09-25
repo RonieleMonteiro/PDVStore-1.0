@@ -1,4 +1,4 @@
-﻿using PDVStore.Helpers;
+using PDVStore.Helpers;
 using PDVStore.Models;
 using PDVStore.Services;
 using System;
@@ -36,7 +36,6 @@ namespace PDVStore.Forms
         {
             _fornecedorService = fornecedorService ?? throw new ArgumentNullException(nameof(fornecedorService));
             BuildUI();
-            Tema.Aplicar(this);
             Load += async (_, _) => await CarregarAsync();
         }
 

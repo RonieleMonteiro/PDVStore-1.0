@@ -3,7 +3,6 @@ using PDVStore.Models;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using PDVStore.Helpers;
 
 namespace PDVStore.Forms
 {
@@ -20,7 +19,6 @@ namespace PDVStore.Forms
         public frmMenuPrincipal(IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            Tema.Aplicar(this);
             _serviceProvider = serviceProvider;
             BuildUI();
         }
@@ -38,8 +36,6 @@ namespace PDVStore.Forms
             StartPosition = FormStartPosition.CenterScreen;
             // AutoSize giraria apenas o formulário; deixamos dimensão fixa
             ClientSize = new Size(760, 460);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            MaximizeBox = false;
             BackColor = Color.White;
 
             Font = new Font("Segoe UI", 11F);

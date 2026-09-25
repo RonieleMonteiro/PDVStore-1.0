@@ -7,7 +7,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using PDVStore.Helpers;
 
 namespace PDVStore.Forms
 {
@@ -26,7 +25,6 @@ namespace PDVStore.Forms
         public frmGerenciarUsuarios(PDVContext context, IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            Tema.Aplicar(this);
             _context = context;
             _serviceProvider = serviceProvider;
 

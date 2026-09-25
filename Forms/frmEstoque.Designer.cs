@@ -167,8 +167,6 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(780, 546);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            MaximizeBox = false;
             Controls.Add(lblProdutoSelecionado);
             Controls.Add(btnConfirmarMovimento);
             Controls.Add(btnBuscar);

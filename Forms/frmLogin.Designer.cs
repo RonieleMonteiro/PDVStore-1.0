@@ -110,8 +110,6 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(348, 189);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            MaximizeBox = false;
             Controls.Add(txtUsuario);
             Controls.Add(txtSenha);
             Controls.Add(lblSenha);
