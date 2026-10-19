@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: pdv-web-db
+    environment:
+      POSTGRES_USER: pdv_user
+      POSTGRES_PASSWORD: pdv_password
+      POSTGRES_DB: pdv_web
+    ports:
+      - "5432:5432"
+    volumes:
+      - pdv_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pdv_user -d pdv_web"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: pdv-web-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - pdv_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pdv_postgres_data:
+  pdv_redis_data:
