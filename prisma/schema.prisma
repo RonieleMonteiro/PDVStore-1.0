@@ -1,0 +1,208 @@
+// prisma/schema.prisma
+// Modelo de dados do PDV Web — baseado na engenharia reversa do PDVStore (.NET / WinForms / SQL Server)
+// Adaptado para PostgreSQL + Prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Papel {
+  ADMINISTRADOR
+  OPERADOR
+  ESTOQUISTA
+}
+
+model Usuario {
+  id            Int      @id @default(autoincrement())
+  nome          String
+  email         String   @unique
+  senhaHash     String
+  ativo         Boolean  @default(true)
+  papel         Papel    @default(OPERADOR)
+  criadoEm      DateTime @default(now())
+  atualizadoEm  DateTime @updatedAt
+
+  vendas        Venda[]
+  caixas        Caixa[]
+  compras       Compra[]
+  movimentacoes MovimentacaoEstoque[]
+
+  @@map("usuarios")
+}
+
+model Produto {
+  id            Int      @id @default(autoincrement())
+  nome          String
+  codigoBarras  String?  @unique
+  preco         Decimal  @db.Decimal(18, 2)
+  precoCusto    Decimal  @db.Decimal(18, 2) @default(0)
+  estoque       Int      @default(0)
+  estoqueMinimo Int      @default(0)
+  categoria     String?
+  descricao     String?
+  ativo         Boolean  @default(true)
+  criadoEm      DateTime @default(now())
+  atualizadoEm  DateTime @updatedAt
+
+  itensVenda    ItemVenda[]
+  itensCompra   ItemCompra[]
+  movimentacoes MovimentacaoEstoque[]
+
+  @@map("produtos")
+  @@index([codigoBarras])
+  @@index([ativo])
+}
+
+model Caixa {
+  id           Int      @id @default(autoincrement())
+  usuarioId    Int
+  usuario      Usuario  @relation(fields: [usuarioId], references: [id])
+  abertura     DateTime @default(now())
+  fechamento   DateTime?
+  valorInicial Decimal  @db.Decimal(18, 2) @default(0)
+  valorFinal   Decimal? @db.Decimal(18, 2)
+  sangria      Decimal? @db.Decimal(18, 2) @default(0)
+  status       String   @default("ABERTO") // ABERTO | FECHADO
+  criadoEm     DateTime @default(now())
+
+  vendas Venda[]
+
+  @@map("caixas")
+  @@index([status])
+  @@index([usuarioId])
+}
+
+model Venda {
+  id             Int      @id @default(autoincrement())
+  usuarioId      Int
+  usuario        Usuario  @relation(fields: [usuarioId], references: [id])
+  dataVenda      DateTime @default(now())
+  valorTotal     Decimal  @db.Decimal(18, 2)
+  desconto       Decimal  @db.Decimal(18, 2) @default(0)
+  formaPagamento String   // DINHEIRO, PIX, CARTAO_CREDITO, CARTAO_DEBITO, FIADO
+  pixTxId        String?
+  status         String   @default("CONCLUIDA") // CONCLUIDA, CANCELADA, PENDENTE
+  caixaId        Int
+  caixa          Caixa    @relation(fields: [caixaId], references: [id])
+  clienteId      Int?
+  cliente        Cliente? @relation(fields: [clienteId], references: [id])
+  itens          ItemVenda[]
+  criadoEm       DateTime @default(now())
+
+  @@map("vendas")
+  @@index([dataVenda])
+  @@index([status])
+  @@index([caixaId])
+  @@index([clienteId])
+  @@index([formaPagamento])
+}
+
+model ItemVenda {
+  id           Int      @id @default(autoincrement())
+  vendaId      Int
+  venda        Venda    @relation(fields: [vendaId], references: [id], onDelete: Cascade)
+  produtoId    Int
+  produto      Produto  @relation(fields: [produtoId], references: [id])
+  quantidade   Int
+  precoUnitario Decimal @db.Decimal(18, 2)
+  subtotal     Decimal  @db.Decimal(18, 2) // quantidade * precoUnitario
+
+  @@map("itens_venda")
+  @@index([vendaId])
+  @@index([produtoId])
+}
+
+model Cliente {
+  id           Int      @id @default(autoincrement())
+  nome         String
+  cpfCnpj      String?
+  telefone     String?
+  email        String?
+  endereco     String?
+  cadastradoEm DateTime @default(now())
+  ativo        Boolean  @default(true)
+  limiteCredito Decimal @db.Decimal(18, 2) @default(0)
+  saldoDevedor Decimal @db.Decimal(18, 2) @default(0)
+
+  vendas Venda[]
+
+  @@map("clientes")
+  @@index([ativo])
+  @@index([cpfCnpj])
+}
+
+model Fornecedor {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  cnpj      String?
+  telefone  String?
+  email     String?
+  ativo     Boolean  @default(true)
+  criacoEm  DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  compras Compra[]
+
+  @@map("fornecedores")
+  @@index([ativo])
+  @@index([cnpj])
+}
+
+model Compra {
+  id          Int      @id @default(autoincrement())
+  fornecedorId Int
+  fornecedor  Fornecedor @relation(fields: [fornecedorId], references: [id])
+  usuarioId   Int
+  usuario     Usuario  @relation(fields: [usuarioId], references: [id])
+  dataCompra  DateTime @default(now())
+  numeroNota  String?
+  valorTotal  Decimal  @db.Decimal(18, 2)
+  status      String   @default("CONCLUIDA") // CONCLUIDA | CANCELADA
+  itens       ItemCompra[]
+  criadoEm    DateTime @default(now())
+
+  @@map("compras")
+  @@index([dataCompra])
+  @@index([status])
+  @@index([fornecedorId])
+}
+
+model ItemCompra {
+  id          Int      @id @default(autoincrement())
+  compraId    Int
+  compra      Compra   @relation(fields: [compraId], references: [id], onDelete: Cascade)
+  produtoId   Int
+  produto     Produto  @relation(fields: [produtoId], references: [id])
+  quantidade  Int
+  precoCusto  Decimal  @db.Decimal(18, 2)
+  subtotal    Decimal  @db.Decimal(18, 2)
+
+  @@map("itens_compra")
+  @@index([compraId])
+  @@index([produtoId])
+}
+
+model MovimentacaoEstoque {
+  id                 Int      @id @default(autoincrement())
+  produtoId          Int
+  produto            Produto  @relation(fields: [produtoId], references: [id])
+  tipo               String   // ENTRADA | SAIDA
+  quantidade         Int
+  precoUnitario      Decimal? @db.Decimal(18, 2)
+  dataMovimentacao   DateTime @default(now())
+  usuarioId          Int?
+  usuario            Usuario? @relation(fields: [usuarioId], references: [id])
+  motivo             String?
+  referenciaVendaId  Int?
+
+  @@map("movimentacoes_estoque")
+  @@index([produtoId])
+  @@index([dataMovimentacao])
+  @@index([tipo])
+  @@index([referenciaVendaId])
+}
