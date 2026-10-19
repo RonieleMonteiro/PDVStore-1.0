@@ -32,7 +32,7 @@ export interface VendaInput {
   itens: ItemVendaInput[]
 }
 
-/* ====================== Registro de venda (parte 1) ====================== */
+/* ====================== Registro de venda ====================== */
 
 export async function registrarVenda(data: VendaInput) {
   if (!data.itens || data.itens.length === 0) {
@@ -141,12 +141,18 @@ export async function registrarVenda(data: VendaInput) {
     }
 
     // 5. Processamento de pagamento (estrutura pronta para gateway real)
-    // Aqui entraria a integração com PagSeguro/Mercado Pago/Stripe
     if (data.formaPagamento.toUpperCase() === "PIX") {
-      // Gerar PixTxId (mock — substituir por integração real)
       const pixTxId = crypto.randomUUID().replace(/-/g, "").toUpperCase()
       await tx.venda.update({
         where: { id: venda.id },
+        data: { pixTxId },
+      })
+    }
+
+    return venda
+  })
+}
+
 /* ====================== Cancelamento de venda ====================== */
 
 export async function cancelarVenda(vendaId: number, motivo: string, usuarioId?: number) {
@@ -243,14 +249,6 @@ export async function listarVendas(filtro?: {
       cliente: { select: { id: true, nome: true } },
     },
     orderBy: { dataVenda: "desc" },
-  })
-}
-
-        data: { pixTxId },
-      })
-    }
-
-    return venda
   })
 }
 
